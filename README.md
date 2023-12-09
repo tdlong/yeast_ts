@@ -1,12 +1,12 @@
 # yeast_ts
 code for yeast time series paper
 
-Obtain raw fastq files for: 
+## Obtain raw fastq files for: 
 - founders	@ 
 - BAS02 @ 
 - evolved populations @    (this paper) 
 	
-align raw reads to reference genome (S288c)
+## align raw reads to reference genome (S288c)
 
 ```bash
 bwa mem -t 1 -M $ref ${R1name} ${R2name} | samtools view -bS - > $name.temp.bam
@@ -14,13 +14,13 @@ samtools sort $name.temp.bam -o $name.bam
 samtools index $name.bam
 ```
 	
-possibly merge samples sequenced across two or more runs
+## possibly merge samples sequenced across two or more runs
 
 ```bash
 bamtools merge -in $name.rep1.bam -in $name.rep2.bam -out $name.merged.bam
 ```
 	
-create a table of SNP frequencies from bams by chromosome 
+## create a table of SNP frequencies from bams by chromosome 
 
 requires: 
 - a file with a list of paths to all the bams to be considered (bam.list.txt) 
@@ -37,7 +37,7 @@ bcftools view -T $Granny calls.$mychr.bcf | bcftools query -e'QUAL<60' -f'%CHROM
 bcftools view -T $Granny calls.$mychr.bcf | bcftools query -e'QUAL<60' -f'%CHROM %POS %REF %ALT [ %AD{0} %AD{1}]\n' | perl yeast.counttab.pl > cSNP.$mychr.txt
 ```
 
-cleanup SNP table to include only well behaved SNPs and other QC
+## cleanup SNP table to include only well behaved SNPs and other QC
 
 ```bash
 # names.txt are the headers for the frequency table
@@ -47,8 +47,7 @@ cat names.txt > SNP.freq.txt
 cat fSNP.chr*.txt >> SNP.freq.txt
 ```
 
-do a little cleanup, and saves more R friendly 
-in R
+plus a little more cleanup in R
 
 ```R
 xx = read.table("SNP.freq.txt",header=TRUE)
@@ -77,19 +76,19 @@ write.table(xx,"SNP.freq.txt")
 
 {include SNPtable on website}
 
-call haplotypes 
+## call haplotypes 
 
 requires: 
 - list of samples to impute haplotypes (=callhaps.txt), with as many lines as size of array job 
 - an output folder (=OUTPUT) 
 - the frequency table above 
 - list of founders (=founder.file.Sept5_21.txt) 
-- window size (=50) 
+- window size (=50)
 
 - haplotyper.justhapfreq.slurm.sh 
 - haplotyper.justhapfreq.R 
 - haplotyper.limSolve.simple.code.R 
- 
+
 - install limSolve in R (i.e., install.packages("limSolve")) 
 	
 ```bash
@@ -103,12 +102,12 @@ cat allhaps.txt | gzip -c > Sept5_22.allhaps.Ns50.txt.gz
 
 {include haplotpe calls on website}
 
-impute SNPs from haplotypes 
+## impute SNPs from haplotypes 
 
 requires 
 - impute.SNP.Sept22.sh 
 - impute.SNP.Sept22.R   # paths may be hardwired... 
- 
+
 - haplotype calls (=Sept5_22.allhaps.Ns50.txt.gz) 
 - samples to call (=callhaps.txt) 
 - SNP table (=SNP.freq.txt) 
@@ -161,4 +160,4 @@ write.table(rbind(xx2,xx3,xx4),"allSNPs2.Ns50impute.txt")
 
 {include imputed SNPs on website}
 
-script to make figures
+## scripts to make figures
