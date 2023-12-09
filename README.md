@@ -84,11 +84,11 @@ requires:
 - the frequency table above 
 - list of founders (=founder.file.Sept5_21.txt) 
 - window size (=50)
-
+<!-- -->
 - haplotyper.justhapfreq.slurm.sh 
 - haplotyper.justhapfreq.R 
 - haplotyper.limSolve.simple.code.R 
-
+<!-- -->
 - install limSolve in R (i.e., install.packages("limSolve")) 
 	
 ```bash
@@ -107,7 +107,7 @@ cat allhaps.txt | gzip -c > Sept5_22.allhaps.Ns50.txt.gz
 requires 
 - impute.SNP.Sept22.sh 
 - impute.SNP.Sept22.R   # paths may be hardwired... 
-
+<!-- -->
 - haplotype calls (=Sept5_22.allhaps.Ns50.txt.gz) 
 - samples to call (=callhaps.txt) 
 - SNP table (=SNP.freq.txt) 
