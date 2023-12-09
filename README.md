@@ -22,10 +22,10 @@ bamtools merge -in $name.rep1.bam -in $name.rep2.bam -out $name.merged.bam
 	
 create a table of SNP frequencies from bams by chromosome 
 requires: 
-	- a file with a list of paths to all the bams to be considered (bam.list.txt) 
-	- a list of SNPs to consider => $Granny="Granny.in.allFound.txt" 
-	- a helper = yeast.freqtab.pl 
-	- a helper = yeast.counttab.pl 
+- a file with a list of paths to all the bams to be considered (bam.list.txt) 
+- a list of SNPs to consider => $Granny="Granny.in.allFound.txt" 
+- a helper = yeast.freqtab.pl 
+- a helper = yeast.counttab.pl 
 	
 ```bash
 declare -a chrs=("chrI" "chrII" "chrIII" "chrIV" "chrIX" "chrM" "chrV" "chrVI" "chrVII" "chrVIII" "chrX" "chrXI" "chrXII" "chrXIII" "chrXIV" "chrXV" "chrXVI")
@@ -79,17 +79,17 @@ write.table(xx,"SNP.freq.txt")
 call haplotypes 
 
 requires: 
-	- list of samples to impute haplotypes (=callhaps.txt), with as many lines as size of array job 
-	- an output folder (=OUTPUT) 
-	- the frequency table above 
-	- list of founders (=founder.file.Sept5_21.txt) 
-	- window size (=50) 
-	 
-	- haplotyper.justhapfreq.slurm.sh 
-	- haplotyper.justhapfreq.R 
-	- haplotyper.limSolve.simple.code.R 
-	 
-	- install limSolve in R (i.e., install.packages("limSolve")) 
+- list of samples to impute haplotypes (=callhaps.txt), with as many lines as size of array job 
+- an output folder (=OUTPUT) 
+- the frequency table above 
+- list of founders (=founder.file.Sept5_21.txt) 
+- window size (=50) 
+
+- haplotyper.justhapfreq.slurm.sh 
+- haplotyper.justhapfreq.R 
+- haplotyper.limSolve.simple.code.R 
+ 
+- install limSolve in R (i.e., install.packages("limSolve")) 
 	
 ```bash
 sbatch --array=1-146 haplotyper.justhapfreq.slurm.sh callhaps.txt OUTPUT SNP.freq.txt founder.file.Sept5_21.txt 50
@@ -105,12 +105,12 @@ cat allhaps.txt | gzip -c > Sept5_22.allhaps.Ns50.txt.gz
 impute SNPs from haplotypes 
 
 requires 
-	- impute.SNP.Sept22.sh 
-	- impute.SNP.Sept22.R   # paths may be hardwired... 
-	 
-	- haplotype calls (=Sept5_22.allhaps.Ns50.txt.gz) 
-	- samples to call (=callhaps.txt) 
-	- SNP table (=SNP.freq.txt) 
+- impute.SNP.Sept22.sh 
+- impute.SNP.Sept22.R   # paths may be hardwired... 
+ 
+- haplotype calls (=Sept5_22.allhaps.Ns50.txt.gz) 
+- samples to call (=callhaps.txt) 
+- SNP table (=SNP.freq.txt) 
 
 ```bash
 sbatch scripts/impute.SNP.Sept22.sh
