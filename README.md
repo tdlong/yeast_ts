@@ -21,6 +21,7 @@ bamtools merge -in $name.rep1.bam -in $name.rep2.bam -out $name.merged.bam
 ```
 	
 create a table of SNP frequencies from bams by chromosome 
+
 requires: 
 - a file with a list of paths to all the bams to be considered (bam.list.txt) 
 - a list of SNPs to consider => $Granny="Granny.in.allFound.txt" 
