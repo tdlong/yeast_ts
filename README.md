@@ -105,57 +105,17 @@ cat allhaps.txt | gzip -c > Sept5_22.allhaps.Ns50.txt.gz
 ## impute SNPs from haplotypes 
 
 requires 
-- impute.SNP.Sept22.sh 
-- impute.SNP.Sept22.R   # paths may be hardwired... 
+- impute2_SNPs.R
+- impute_SNPs.R
+- impute_SNPs.sh
 <!-- -->
 - haplotype calls (=Sept5_22.allhaps.Ns50.txt.gz) 
-- samples to call (=callhaps.txt) 
 - SNP table (=SNP.freq.txt) 
 
 ```bash
-sbatch scripts/impute.SNP.Sept22.sh
+sbatch impute_SNPs.sh
 
-# results in -> impute_SNP_Sept22/
-# CHROM	POS	POOL	iGeno	oGeno
-# chrIV 	 18422 	 SEE01B02CD600R04 	 0.9994 	 1 
-# iGeno = imputed allele frequency frequency
-# oGeno = observed {raw freq} allele frequency
-
-cat impute_OUT/$sample_1.impute.SNP.txt | head -n 1 > allSNPs.txt
-awk FNR-1 impute_OUT/*.impute.SNP.txt >> allSNPs.txt
-cat allSNPs.txt | gzip -c > allSNPs.Ns50impute.txt.gz
-```
-
-Then some tweaks fairly specific to these particular samples in R 
-
-```R
-xx = read.table("allSNPs.Ns50impute.txt.gz", header=TRUE)
-library(tidyverse)
-xx2 = xx %>%
-	filter(! POOL %in% c("A1xB3_diploid_controls","BAS02","BAS02r")) %>%
-	mutate(drug = substr(as.character(POOL), 9, 10)) %>%
-	mutate(rep = substr(as.character(POOL), 15, 16)) %>%
-	mutate(week = substr(as.character(POOL), 4, 5)) %>%
-	mutate(base = "N")
-	
-xx3 = xx %>% filter(POOL == "BAS02") %>%	
-	mutate(drug = "XX") %>%
-	mutate(rep = "00") %>%
-	mutate(week = "00") %>%
-	mutate(base = "T")
-
-xx4 = xx %>% filter(POOL == "BAS02r") %>%	
-	mutate(drug = "XX") %>%
-	mutate(rep = "00") %>%
-	mutate(week = "00") %>%
-	mutate(base = "R")
-
-###  I am trying to encode the base base populations here
-###  they are common to all treatments
-###  there are two of them BAS02 = "T" and BAS02r = "R" 
-###  or "N" = not a base population
-	
-write.table(rbind(xx2,xx3,xx4),"allSNPs2.Ns50impute.txt")
+# output = imputedSNPs.final.Jul23.RDS
 ```
 
 {include imputed SNPs on website}
