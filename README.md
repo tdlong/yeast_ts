@@ -121,3 +121,11 @@ sbatch impute_SNPs.sh
 {include imputed SNPs on website}
 
 ## scripts to make figures
+
+```bash
+Rscript Figure2.R
+Rscript Figure1_supp.R
+Rscript Figure3.R
+Rscript Figure4.R
+```
+
