@@ -74,7 +74,7 @@ for (bad in 1:length(bchrom)){
 write.table(xx,"SNP.freq.txt")
 ```
 
-{include SNPtable on website}
+This SNPtable is available for download (see below)
 
 ## call haplotypes 
 
@@ -100,7 +100,7 @@ awk FNR-1 OUTPUT/*_hap_freq.txt >> allhaps.txt
 cat allhaps.txt | gzip -c > Sept5_22.allhaps.Ns50.txt.gz
 ```
 
-{include haplotpe calls on website}
+This haplotype table is available for download (see below)
 
 ## impute SNPs from haplotypes 
 
@@ -116,9 +116,10 @@ requires
 sbatch impute_SNPs.sh
 
 # output = imputedSNPs.final.Jul23.RDS
+# which was converted to a more portable data frame 
 ```
 
-{include imputed SNPs on website}
+This *imputed* SNPtable is available for download (see below)
 
 ## scripts to make figures
 
@@ -128,4 +129,8 @@ Rscript Figure1_supp.R
 Rscript Figure3.R
 Rscript Figure4.R
 ```
+
+## tarball of 3 tables generated via this pipeline here:
+
+
 
