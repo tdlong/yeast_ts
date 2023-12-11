@@ -2,9 +2,9 @@
 code for yeast time series paper
 
 ## Obtain raw fastq files for: 
-- founders	@ 
-- BAS02 @ 
-- evolved populations @    (this paper) 
+- founders @ SRA::PRJNA552112
+- BAS02 @ SRA::SRX6465400 
+- evolved populations @ SRA::   (this paper) 
 	
 ## align raw reads to reference genome (S288c)
 
