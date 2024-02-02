@@ -121,6 +121,13 @@ sbatch impute_SNPs.sh
 
 This *imputed* SNPtable is available for download (see below)
 
+## new mutations
+
+```bash
+sbatch scripts/bam2bcf3.sh
+sbatch scripts/bcf2REFALT.sh
+```
+
 ## scripts to make figures
 
 ```bash
@@ -128,6 +135,7 @@ Rscript Figure2.R
 Rscript Figure1_supp.R
 Rscript Figure3.R
 Rscript Figure4.R
+Rscript make_newmutation_figure.R
 ```
 
 ## tarball of 3 tables generated via this pipeline here:
