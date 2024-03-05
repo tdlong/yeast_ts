@@ -43,8 +43,13 @@ write.table(df3,"denovo.SNPs.2.txt")
 df3 = read.table("denovo.SNPs.2.txt") %>%
 	mutate(drug = str_sub(drug_rep,1,2)) %>%
 	mutate(CHROM_POS = paste0(CHROM,"_",POS))
+	
+df4 = df3 %>%
+	filter(CHROM_POS != "chrXIV_642529") %>%
+	filter(freq > 0.001) %>%
+	rename(week=gen)
 
-NewMut = ggplot(df3 %>% filter(CHROM_POS != "chrXIV_642529") %>% filter(freq > 0.001),aes(x=gen,y=log10(freq), group=drug_rep)) +
+NewMut = ggplot(df4, aes(x=week,y=log10(freq), group=drug_rep)) +
 #	geom_line(aes(color = drug)) +
 	geom_point(aes(color = drug)) + 
 	facet_wrap(~ CHROM_POS)
